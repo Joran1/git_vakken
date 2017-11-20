@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="D:\eclipse workspaces\workspace ooo\lab 05 - factory, enum, reflection, properties"/>
+		<item value="D:\eclipse workspaces\workspace ooo\lab 04 - singleton"/>
+		<item value="D:\eclipse workspaces\workspace ooo\lab 03 - observer"/>
+		<item value="D:\eclipse workspaces\workspace ooo\lab 02 - strategy"/>
+		<item value="D:\eclipse workspaces\workspace ooo\lab 02 - state"/>
+	</list>
+</section>

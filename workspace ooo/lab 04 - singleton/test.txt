@@ -1,0 +1,6 @@
+8 NOVEMBER 2017 INFO: information is given
+8 NOVEMBER 2017 WARNING: this is a warning
+8 NOVEMBER 2017 EXCEPTION: error 404 [Ljava.lang.StackTraceElement;@214c265e
+8 NOVEMBER 2017 INFO: information is given
+8 NOVEMBER 2017 WARNING: this is a warning
+8 NOVEMBER 2017 EXCEPTION: error 404 [Ljava.lang.StackTraceElement;@214c265e
