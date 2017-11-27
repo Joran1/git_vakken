@@ -1,6 +1,8 @@
 package ui.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -25,7 +27,8 @@ import domain.ShopService;
 public class servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	ShopService service;
+	private ShopService service;
+	private Cookie cookie = new Cookie("color", "yellow");;
 	
 	public void init() throws ServletException{
 		super.init();
@@ -57,13 +60,27 @@ public class servlet extends HttpServlet {
 		String actie = request.getParameter("action");
 		if(actie == null) actie = "";
 		
-		//COOKIES
+		Cookie q = null;
+		if(request.getCookies() != null){
+			for (Cookie c : request.getCookies()){
+				if (c.getName().equals("color")){
+					q = c;
+					break;
+				}
+			}
+		}
 		
-		/*String color = request.getParameter("color");
-		Cookie cookie = new Cookie("color", color);
-		response.addCookie(cookie);*/
-				
-		//COOKIES END
+		if(q == null){
+			q = new Cookie("color","yellow");
+		}
+		String color = q.getValue();
+		if(actie.equals("changeColor")){
+			actie = changeColor(request,response, q);
+			color = q.getValue();
+		}
+		if(color.equals("yellow") ||color.equals("red")){
+			request.setAttribute("color", color);
+		}
 		
 		switch(actie) {
 		
@@ -111,6 +128,20 @@ public class servlet extends HttpServlet {
 			break;
 		case "Update":
 			doel = update(request,response);
+			break;
+			
+		//CHECK PASSWORD
+		case "naarCheckPassword":
+			request.setAttribute("id", request.getParameter("id"));
+			doel = "CheckPassword.jsp";
+			break;			
+		case "checkPassword":
+			doel = checkPassword(request, response);
+			break;
+			
+		//CHANGE COLOR
+		case "changeColor":
+			doel = changeColor(request, response, q);
 			break;
 			
 		default:
@@ -173,7 +204,12 @@ public class servlet extends HttpServlet {
 	private void verwerkPassword(Person person, HttpServletRequest request, List<String> foutenPersoon) {
 		String password = request.getParameter("password");
 		request.setAttribute("password", password);
-		try { person.setPassword(password); } catch (IllegalArgumentException e){ foutenPersoon.add(e.getMessage()); }
+		try { 
+			person.setPasswordHashed(password); 
+		} catch (IllegalArgumentException a){ foutenPersoon.add(a.getMessage());
+		} catch (NoSuchAlgorithmException b){ foutenPersoon.add(b.getMessage());
+		} catch (UnsupportedEncodingException c){ foutenPersoon.add(c.getMessage());
+		}
 	}
 	private void verwerkFirstName(Person person, HttpServletRequest request, List<String> foutenPersoon) {
 		String firstName = request.getParameter("firstName");
@@ -236,8 +272,7 @@ public class servlet extends HttpServlet {
 			Product product = service.getProduct(Integer.parseInt(id));
 			request.setAttribute("p", product);
 		return "Update.jsp";
-	}
-	
+	}	
 	private String update(HttpServletRequest request, HttpServletResponse response) {
 		String productId = (request.getParameter("idUpdate"));
 		Product product = service.getProduct(Integer.parseInt(productId));
@@ -261,4 +296,31 @@ public class servlet extends HttpServlet {
 			return "Update.jsp";
 		}	
 	}
+	
+	//CHECK PASSWORD
+	private String checkPassword(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String password = request.getParameter("password");
+		Person p = service.getPerson(id);
+		try {
+		if(p.isCorrectPassword(password)){ request.setAttribute("check", "juist"); } else { request.setAttribute("check", "fout"); }
+		}catch(UnsupportedEncodingException e){
+		}catch(NoSuchAlgorithmException d){ 
+		}
+		
+		return "CheckPassword.jsp";		
+	}
+
+	//CHANGE COLOR
+	private String changeColor(HttpServletRequest request, HttpServletResponse response, Cookie c) throws ServletException, IOException {
+		String origin = request.getParameter("page");
+		if(c.getValue().equals("yellow")){
+			c.setValue("red");
+		}else{
+			c.setValue("yellow");
+		}
+		response.addCookie(c);
+		return origin;
+	}
+
 }

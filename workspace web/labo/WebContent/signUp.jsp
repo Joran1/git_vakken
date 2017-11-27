@@ -7,25 +7,13 @@
 <meta charset="UTF-8">
 <title>Sign Up</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/${color == null ? 'yellow' : color}.css" />
 </head>
 <body>
 <div id="container">
-<header>
-<h1><span>Web shop</span></h1>
-<nav>
-<ul>
-						<li> <a href="servlet">Home</a></li>
-						<li> <a href="servlet?action=naarPersonOverview">Overview</a></li>
-						<li id="actual"> <a href="servlet?action=naarMaakPersoon">Sign up</a></li>
-						<li> <a href="servlet?action=naarProductOverview">Products</a></li>
-						<li> <a href="servlet?action=naarMaakProduct">Add Product</a></li>
-</ul>
-</nav>
-<h2>
-Sign Up
-</h2>
-
-</header>
+		<jsp:include page="header.jsp">
+			<jsp:param name="title" value="Sign Up" />
+		</jsp:include>
 
 <main>
 	<div class="alert-danger">
@@ -49,9 +37,9 @@ Sign Up
         
     </form>
 </main>
-<footer>
-&copy; Webontwikkeling 3, UC Leuven-Limburg
-</footer>
+		<jsp:include page="footer.jsp">
+			<jsp:param name="page" value="naarMaakPersoon" />
+		</jsp:include>
 </div>
 </body>
 </html>

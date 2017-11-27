@@ -16,13 +16,12 @@ public class PersonDbSQL implements PersonDb{
 	Properties properties;
 	String url;
 	
-	public PersonDbSQL(Properties properties){
-		this.properties = properties;
-		this.url = properties.getProperty("url");
-		
+	public PersonDbSQL(Properties properties){	
 		try {
 			Class.forName("org.postgresql.Driver");
-		} catch (Exception e) {
+			this.properties = properties;
+			this.url = properties.getProperty("url");
+		} catch (ClassNotFoundException e) {
 			throw new DbException(e.getMessage(), e);
 		}
 	}
@@ -32,7 +31,7 @@ public class PersonDbSQL implements PersonDb{
 		if(personId == null || personId.trim().isEmpty()){ throw new DbException("Give a valid personID"); }	
 		Person person = null;
 		
-		String sql = "SELECT * FROM r0668325.person WHERE userid = + ? ";
+		String sql = "SELECT * FROM r0668325.person WHERE userid = ? ";
 		
 		try ( Connection connection = DriverManager.getConnection(url, properties); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, personId);

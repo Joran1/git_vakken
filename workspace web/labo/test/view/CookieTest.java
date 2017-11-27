@@ -16,9 +16,9 @@ public class CookieTest {
 	
 	@Before
 	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "/Users/.../chromedriver");
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\utlisateur\\Desktop\\files school\\web files\\chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.get("http://localhost:8080/1718_WebShop_Week7/");
+		driver.get("http://localhost:8080/labo/servlet?action=");
 	}
 	
 	private String giveColorFooter(){
@@ -56,17 +56,16 @@ public class CookieTest {
 	
 	@Test
 	public void testHomepageSwitchColorOnceCorrect() {
-		checkColorFooter("Home");
-		
+		checkColorFooter("Home");		
 	}
 	
 	@Test 
 	public void testOverviewUsersSwithcColorTwiceCorrect() {
-		driver.get("http://localhost:8080/1718_WebShop_Week7/Controller?action=overview");
+		driver.get("http://localhost:8080/labo/servlet?action=naarPersonOverview");
 		// first change
-		checkColorFooter("User Overview");
+		checkColorFooter("Overview");
 		//second change
-		checkColorFooter(" User Overview");
+		checkColorFooter("Overview");
 		
 
 	}
@@ -74,8 +73,8 @@ public class CookieTest {
 	@Test
 	public void testSwitchColorAfterUpdateProductCorrect() {
 		WebElement link, button;
-		driver.get("http://localhost:8080/labo4Web/Controller?action=products");
-		link = driver.findElement(By.cssSelector("a[href^='Controller?action=updateProduct']"));
+		driver.get("http://localhost:8080/labo/servlet?action=naarProductOverview");
+		link = driver.findElement(By.cssSelector("a[href^='servlet?action=naarUpdate']"));
 		link.click();
 		assertEquals("Update Product", driver.getTitle());
 		button = driver.findElement(By.cssSelector("input[type='submit']"));

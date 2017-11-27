@@ -1,5 +1,7 @@
 package domain;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Properties;
 
@@ -63,5 +65,16 @@ public class ShopService {
 	}
 	private ProductDb getProductDb() {
 		return productDb;
+	}
+	
+	//getUserAuthentication
+	private Person getUserIfAuthenticated(String userid, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		Person p = null;
+		for(Person person: personDb.getAll()) {
+			if(person.isCorrectPassword(password) && person.getUserid().equals(userid)) {
+				p = person;
+			}
+		}
+		return p;	
 	}
 }

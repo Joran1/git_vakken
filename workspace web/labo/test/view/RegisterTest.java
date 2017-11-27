@@ -17,7 +17,7 @@ public class RegisterTest {
 	
 	@Before
 	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\utlisateur\\Desktop\\U\\web files\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\utlisateur\\Desktop\\files school\\web files\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get("http://localhost:8080/labo/servlet?action=naarMaakPersoon");
 	}
